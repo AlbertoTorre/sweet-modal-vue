@@ -3,8 +3,6 @@
 		<project-navigation>
 			<li><label>Projects:</label></li>
 			<li><a href="#" class="active">SweetModal for Vue.js</a></li>
-			<li><a href="http://sweet-modal.adepto.as/">SweetModal for jQuery</a></li>
-			<li><a href="http://sweet-dropdown.adepto.as/">SweetDropdown for jQuery</a></li>
 		</project-navigation>
 
 		<header>
@@ -15,7 +13,7 @@
 				</div>
 
 				<div class="action">
-					<a href="https://github.com/adeptoas/sweet-modal-vue">
+					<a href="https://github.com/AlbertoTorre/sweet-modal-vue">
 						View on
 
 						<span class="github">

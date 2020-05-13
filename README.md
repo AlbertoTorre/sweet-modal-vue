@@ -8,7 +8,7 @@ Now available for Vue.js.
 Install SweetModal for Vue.js through npm:
 
 ```
-npm install sweet-modal-vue
+npm install sweet-modal-vue-evolution
 ```
 
 ## Examples
@@ -23,6 +23,7 @@ SweetModal should work in most major browsers:
 - Firefox 20+
 - Chrome 20+
 - Opera 15+
+- Internet Explorer 11+
 - Microsoft Edge
 
 ## Contribution
