@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+const { VueLoaderPlugin } = require('vue-loader')
 
 // Determine which env to use
 // by having it overriden at runtime using `cross-env NODE_ENV=...`
@@ -83,7 +84,8 @@ module.exports = {
 			'process.env': {
 				NODE_ENV: '"' + node_env + '"'
 			}
-		})
+		}),
+		new VueLoaderPlugin()
 	],
 
 	devtool: '#cheap-source-map',
