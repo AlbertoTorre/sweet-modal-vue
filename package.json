@@ -38,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dehost/sweet-modal-vue.git"
+    "url": "git+https://github.com//AlbertoTorre/sweet-modal-vue.git"
   },
   "keywords": [
     "sweetmodal",
@@ -48,10 +48,10 @@
   ],
   "main": "dist/sweet-modal.js",
   "module": "src/main.js",
-  "author": "Dehost",
+  "author": "AlbertoTorre",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dehost/sweet-modal-vue/issues"
+    "url": "https://github.com//AlbertoTorre/sweet-modal-vue/issues"
   },
-  "homepage": "https://github.com/dehost/sweet-modal-vue#readme"
+  "homepage": "https://github.com//AlbertoTorre/sweet-modal-vue#readme"
 }
