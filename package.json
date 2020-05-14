@@ -1,6 +1,6 @@
 {
   "name": "sweet-modal-vue-evolution",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "SweetModal library for use with Vue.js",
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -25,7 +25,8 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "terser-webpack-plugin": "^1.3.0"
   },
   "peerDependencies": {
     "vue": "2.x"
@@ -33,8 +34,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config docs/webpack.config.js --inline --hot",
     "build": "npm run build-src && npm run build-docs",
-    "build-src": "webpack --config src/webpack.config.js --progress --hide-modules",
-    "build-docs": "webpack --config docs/webpack.config.js --progress --hide-modules"
+    "build-src": "webpack --mode=production --config src/webpack.config.js --progress --hide-modules",
+    "build-docs": "webpack --mode=production --config docs/webpack.config.js --progress --hide-modules"
   },
   "repository": {
     "type": "git",
