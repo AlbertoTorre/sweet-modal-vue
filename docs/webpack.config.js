@@ -9,7 +9,6 @@ module.exports = merge.smart(require(path.resolve(__dirname, '../conf/webpack.js
 		publicPath: 'dist',
 		filename: 'build.js'
 	},
-
 	devServer: {
 		contentBase: path.resolve(__dirname)
 	},

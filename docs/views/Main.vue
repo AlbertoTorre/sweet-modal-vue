@@ -212,7 +212,7 @@
 
 			<ol>
 				<li>
-					Install sweet-modal-vue using npm: <code>npm install sweet-modal-vue</code>
+					Install sweet-modal-vue using npm: <code>npm install sweet-modal-vue-evolution</code>
 				</li>
 
 				<li>
