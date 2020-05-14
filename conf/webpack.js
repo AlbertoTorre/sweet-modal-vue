@@ -80,10 +80,6 @@ module.exports = {
 		],
 	},
 	optimization: {
-		splitChunks: {
-			// include all types of chunks
-			chunks: 'all'
-		},
 		minimizer: [
 		  // we specify a custom UglifyJsPlugin here to get source maps in production
 		  new TerserPlugin({
