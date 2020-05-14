@@ -13,7 +13,7 @@ npm install sweet-modal-vue-evolution
 
 ## Examples
 
-For examples, refer to [the demo page](https://albertotorre.github.io/sweet-modal-vue/).
+For examples, refer to [the demo page](https://albertotorre.github.io/sweet-modal-vue-evolution/).
 
 ## Browser Compatibility
 
