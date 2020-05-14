@@ -13,7 +13,7 @@
 				</div>
 
 				<div class="action">
-					<a href="https://github.com/AlbertoTorre/sweet-modal-vue">
+					<a href="https://github.com/AlbertoTorre/sweet-modal-vue-evolution">
 						View on
 
 						<span class="github">
