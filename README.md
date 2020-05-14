@@ -43,3 +43,9 @@ SweetModal should work in most major browsers:
 - kebab-case attributes
 - arrow functions if possible
 - be fully ES6 compliant!
+
+<p align="right">
+  <a href="https://www.buymeacoffee.com/dehost" target="_blank">
+  <img width="200" alt="screen shot 2018-03-01 at 10 33 39" src="https://user-images.githubusercontent.com/1577802/36840220-21beb89c-1d3c-11e8-98a4-45fc334842cf.png">
+  </a>
+</p>

@@ -58,8 +58,7 @@ module.exports = {
 							},
 							modules: false,
 							forceAllTransforms: (node_env === 'production')
-						},
-						'es2015']]
+						}]]
 					}
 				}
 			},
