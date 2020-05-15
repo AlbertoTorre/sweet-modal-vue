@@ -187,23 +187,23 @@
 		},
 
 		computed: {
-			has_title() {
+			has_title: function() {
 				return this.title || this.$slots.title
 			},
 
-			has_tabs() {
+			has_tabs: function() {
 				return this.tabs.length > 0
 			},
 
-			has_content() {
+			has_content: function() {
 				return this.$slots.default
 			},
 
-			current_tab() {
+			current_tab: function() {
 				return this.tabs.filter(t => t.active === true)[0]
 			},
 
-			overlay_classes() {
+			overlay_classes: function() {
 				return [
 					'sweet-modal-overlay',
 					'theme-' + this.overlayTheme,
@@ -215,7 +215,7 @@
 				]
 			},
 
-			modal_classes() {
+			modal_classes: function() {
 				return [
 					'sweet-modal',
 					'theme-' + this.modalTheme,
@@ -232,7 +232,7 @@
 				]
 			},
 
-			modal_style() {
+			modal_style: function() {
 				let width = this.width
 				let maxWidth = null
 
@@ -258,7 +258,7 @@
 			 *
 			 * @param tabId string     Optional id or index of initial tab element.
 			 */
-			open(tabId = null) {
+			open: function(tabId = null) {
 				if (tabId && this.has_tabs) {
 					// Find tab with wanted id.
 					let openingTabs = this.tabs.filter((tab) => {return tab.id === tabId})
@@ -286,7 +286,7 @@
 			 * Close the dialog
 			 * Emits an event 'close'
 			 */
-			close() {
+			close: function() {
 				this.visible = false
 				this._unlockBody()
 
@@ -297,7 +297,7 @@
 			/**
 			 * Bounce the modal.
 			 */
-			bounce() {
+			bounce: function() {
 				this.is_bouncing = true
 
 				setTimeout(() => this.is_bouncing = false, 330)
@@ -307,7 +307,7 @@
 			    INTERNAL METHODS
 			 **********************/
 
-			_lockBody() {
+			_lockBody: function() {
 				this.backups.body.height = document.body.style.height
 				this.backups.body.overflow = document.body.style.overflow
 
@@ -315,12 +315,12 @@
 				document.body.style.overflow = 'hidden'
 			},
 
-			_unlockBody() {
+			_unlockBody: function() {
 				document.body.style.height = this.backups.body.height
 				document.body.style.overflow = this.backups.body.overflow
 			},
 
-			_onOverlayClick(event) {
+			_onOverlayClick: function (event) {
 				if (!event.target.classList || event.target.classList.contains('sweet-modal-clickable')) {
 					if (this.blocking) {
 						if (this.pulseOnBlock) this.bounce()
@@ -330,7 +330,7 @@
 				}
 			},
 
-			_onDocumentKeyup(event) {
+			_onDocumentKeyup: function (event) {
 				if (event.keyCode == 27) {
 					if (this.blocking) {
 						if (this.pulseOnBlock) this.bounce()
@@ -340,12 +340,12 @@
 				}
 			},
 
-			_changeTab(tab) {
+			_changeTab:  function (tab) {
 				this.tabs.map(t => t.active = t == tab)
 				this.currentTab = tab
 			},
 
-			_getClassesForTab(tab) {
+			_getClassesForTab: function (tab) {
 				return [
 					'sweet-modal-tab',
 
@@ -356,7 +356,7 @@
 				]
 			},
 
-			_animateIcon() {
+			_animateIcon: function () {
 				if (!this.icon) return
 
 				switch (this.icon) {
@@ -406,7 +406,7 @@
 			 * @param DOMNode $ref     Element to apply classes to or children of that element
 			 * @param Object  classMap Class Map which elements get which classes (see doc)
 			 */
-			_applyClasses($ref, classMap) {
+			_applyClasses: function ($ref, classMap) {
 				for (let cl in classMap) {
 					let classes = classMap[cl]
 					let $el

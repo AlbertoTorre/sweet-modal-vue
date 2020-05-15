@@ -30,20 +30,16 @@
 			}
 		},
 
-		data() {
+		data: function () {
 			return {
 				active: false
 			}
 		},
 
 		computed: {
-			cmpName() {
+			cmpName: function () {
 				return 'tab'
 			}
 		}
     }
 </script>
-
-<style lang="scss">
-
-</style>

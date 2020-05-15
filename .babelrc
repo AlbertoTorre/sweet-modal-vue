@@ -1,6 +1,5 @@
 {
     "presets": [
-        "vue",
         "@babel/preset-env"
     ],
     "plugins": [
