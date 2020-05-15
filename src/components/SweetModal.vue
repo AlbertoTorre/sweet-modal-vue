@@ -425,7 +425,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped >
 	@import '../styles/mixins';
 	@import '../styles/colors';
 	@import '../styles/animations';
