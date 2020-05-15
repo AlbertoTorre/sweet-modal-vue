@@ -156,7 +156,7 @@
 			}
 		},
 
-		mounted() {
+		mounted: function() {
 			this.tabs = this.$children.filter(c => c.cmpName && c.cmpName == 'tab')
 
 			if (this.has_tabs) {
@@ -166,7 +166,7 @@
 			document.addEventListener('keyup', this._onDocumentKeyup)
 		},
 
-		beforeDestroy() {
+		beforeDestroy: function() {
 			document.removeEventListener('keyup', this._onDocumentKeyup)
 		},
 
@@ -425,7 +425,7 @@
 	}
 </script>
 
-<style lang="scss" scoped >
+<style lang="scss" scoped>
 	@import '../styles/mixins';
 	@import '../styles/colors';
 	@import '../styles/animations';

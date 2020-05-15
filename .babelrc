@@ -1,16 +1,9 @@
 {
     "presets": [
-        "@babel/preset-env"
-    ],
-    "plugins": [
-        [
-            "add-module-exports",
-            {
-              "addDefaultProperty": true
+        [ "@babel/preset-env", {
+            "targets": {
+              "browsers": [ "last 2 version", "ie >= 10" ]
             }
-        ],
-        "transform-vue-inline-template",
-        "transform-vue-template",
-        "transform-object-assign"
+        }]
     ]
 }
