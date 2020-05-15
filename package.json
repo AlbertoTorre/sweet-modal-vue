@@ -1,6 +1,6 @@
 {
   "name": "sweet-modal-vue-evolution",
-  "version": "2.0.5-beta.12",
+  "version": "2.0.5-beta.13",
   "description": "SweetModal library for use with Vue.js",
   "devDependencies": {
     "cross-env": "^1.0.6",
