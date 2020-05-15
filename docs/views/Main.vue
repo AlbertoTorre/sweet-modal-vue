@@ -2,7 +2,7 @@
 	<div id="main">
 		<project-navigation>
 			<li><label>Projects:</label></li>
-			<li><a href="#" class="active">SweetModal for Vue.js</a></li>
+			<li><a href="#" class="active">SweetModal Evolution for Vue.js</a></li>
 		</project-navigation>
 
 		<header>
@@ -194,13 +194,13 @@
 
 			<ol>
 				<li>
-					Install sweet-modal-vue using npm: <code>npm install sweet-modal-vue</code>
+					Install sweet-modal-vue-evolution using npm: <code>npm install sweet-modal-vue-evolution</code>
 				</li>
 
 				<li>
-					Import sweet-modal-vue globally:<br />
+					Import sweet-modal-vue-evolution globally:<br />
 
-					<sweet-code light><code class="javascript">import SweetModal from 'sweet-modal-vue/src/plugin.js'<br />Vue.use(SweetModal)</code></sweet-code>
+					<sweet-code light><code class="javascript">import SweetModal from 'sweet-modal-vue-evolution/src/plugin.js'<br />Vue.use(SweetModal)</code></sweet-code>
 				</li>
 			</ol>
 		</content-section>
@@ -212,13 +212,13 @@
 
 			<ol>
 				<li>
-					Install sweet-modal-vue using npm: <code>npm install sweet-modal-vue-evolution</code>
+					Install sweet-modal-vue-evolution using npm: <code>npm install sweet-modal-vue-evolution</code>
 				</li>
 
 				<li>
-					Import sweet-modal-vue into your component:<br />
+					Import sweet-modal-vue-evolution into your component:<br />
 
-					<sweet-code light><code class="javascript">import { SweetModal, SweetModalTab } from 'sweet-modal-vue'</code></sweet-code>
+					<sweet-code light><code class="javascript">import { SweetModal, SweetModalTab } from 'sweet-modal-vue-evolution'</code></sweet-code>
 				</li>
 
 				<li>
