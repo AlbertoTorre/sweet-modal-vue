@@ -156,7 +156,7 @@
 			}
 		},
 
-		mounted: function() {
+		mounted() {
 			this.tabs = this.$children.filter(c => c.cmpName && c.cmpName == 'tab')
 
 			if (this.has_tabs) {
@@ -166,11 +166,11 @@
 			document.addEventListener('keyup', this._onDocumentKeyup)
 		},
 
-		beforeDestroy: function() {
+		beforeDestroy() {
 			document.removeEventListener('keyup', this._onDocumentKeyup)
 		},
 
-		data: function () {
+		data () {
 			return {
 				visible: false,
 				is_open: false,
@@ -187,23 +187,23 @@
 		},
 
 		computed: {
-			has_title: function() {
+			has_title() {
 				return this.title || this.$slots.title
 			},
 
-			has_tabs: function() {
+			has_tabs() {
 				return this.tabs.length > 0
 			},
 
-			has_content: function() {
+			has_content() {
 				return this.$slots.default
 			},
 
-			current_tab: function() {
+			current_tab() {
 				return this.tabs.filter(t => t.active === true)[0]
 			},
 
-			overlay_classes: function() {
+			overlay_classes() {
 				return [
 					'sweet-modal-overlay',
 					'theme-' + this.overlayTheme,
@@ -215,7 +215,7 @@
 				]
 			},
 
-			modal_classes: function() {
+			modal_classes() {
 				return [
 					'sweet-modal',
 					'theme-' + this.modalTheme,
@@ -232,7 +232,7 @@
 				]
 			},
 
-			modal_style: function() {
+			modal_style() {
 				let width = this.width
 				let maxWidth = null
 
@@ -258,7 +258,7 @@
 			 *
 			 * @param tabId string     Optional id or index of initial tab element.
 			 */
-			open: function(tabId = null) {
+			open(tabId = null) {
 				if (tabId && this.has_tabs) {
 					// Find tab with wanted id.
 					let openingTabs = this.tabs.filter((tab) => {return tab.id === tabId})
@@ -286,7 +286,7 @@
 			 * Close the dialog
 			 * Emits an event 'close'
 			 */
-			close: function() {
+			close() {
 				this.visible = false
 				this._unlockBody()
 
@@ -297,7 +297,7 @@
 			/**
 			 * Bounce the modal.
 			 */
-			bounce: function() {
+			bounce() {
 				this.is_bouncing = true
 
 				setTimeout(() => this.is_bouncing = false, 330)
@@ -307,7 +307,7 @@
 			    INTERNAL METHODS
 			 **********************/
 
-			_lockBody: function() {
+			_lockBody() {
 				this.backups.body.height = document.body.style.height
 				this.backups.body.overflow = document.body.style.overflow
 
@@ -315,12 +315,12 @@
 				document.body.style.overflow = 'hidden'
 			},
 
-			_unlockBody: function() {
+			_unlockBody() {
 				document.body.style.height = this.backups.body.height
 				document.body.style.overflow = this.backups.body.overflow
 			},
 
-			_onOverlayClick: function (event) {
+			_onOverlayClick(event) {
 				if (!event.target.classList || event.target.classList.contains('sweet-modal-clickable')) {
 					if (this.blocking) {
 						if (this.pulseOnBlock) this.bounce()
@@ -330,7 +330,7 @@
 				}
 			},
 
-			_onDocumentKeyup: function (event) {
+			_onDocumentKeyup(event) {
 				if (event.keyCode == 27) {
 					if (this.blocking) {
 						if (this.pulseOnBlock) this.bounce()
@@ -340,12 +340,12 @@
 				}
 			},
 
-			_changeTab:  function (tab) {
+			_changeTab(tab) {
 				this.tabs.map(t => t.active = t == tab)
 				this.currentTab = tab
 			},
 
-			_getClassesForTab: function (tab) {
+			_getClassesForTab(tab) {
 				return [
 					'sweet-modal-tab',
 
@@ -356,7 +356,7 @@
 				]
 			},
 
-			_animateIcon: function () {
+			_animateIcon() {
 				if (!this.icon) return
 
 				switch (this.icon) {
@@ -406,7 +406,7 @@
 			 * @param DOMNode $ref     Element to apply classes to or children of that element
 			 * @param Object  classMap Class Map which elements get which classes (see doc)
 			 */
-			_applyClasses: function ($ref, classMap) {
+			_applyClasses($ref, classMap) {
 				for (let cl in classMap) {
 					let classes = classMap[cl]
 					let $el
@@ -425,7 +425,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	@import '../styles/mixins';
 	@import '../styles/colors';
 	@import '../styles/animations';
