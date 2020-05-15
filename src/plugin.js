@@ -1,29 +1,17 @@
 import { SweetModal, SweetModalTab } from './main.js'
 
-function install(Vue) {
+// Exportación de los componentes individualmente
+export { SweetModal, SweetModalTab }
 
-  if (install.installed) return;
-  install.installed = true;
-
-  Vue.component('SweetModal', SweetModal)
-  Vue.component('SweetModalTab', SweetModalTab)
+// Instalación de la librería como un plugin
+export function install(Vue) {
+	Vue.component('SweetModal', SweetModal)
+	Vue.component('SweetModalTab', SweetModalTab)
 }
 
-const plugin = {
-  install
-};
-
-let GlobalVue = null;
-if (typeof window !== "undefined") {
-  GlobalVue = window.Vue;
-} else if (typeof global !== "undefined") {
-  GlobalVue = global.vue;
+if (typeof window !== 'undefined' && window.Vue) {
+  Vue.use({ install });
 }
 
-if (GlobalVue) {
-  GlobalVue.use(plugin);
-}
-
-SweetModal.install = install;
-
-export default { SweetModal, SweetModalTab } ;
+// Exportación de la librería como plugin
+export default { install: install }
