@@ -157,7 +157,9 @@
 		},
 
 		mounted() {
-			this.tabs = this.$children.filter(c => c.cmpName && c.cmpName == 'tab')
+			this.tabs = this.$children.filter( (c) => {
+				return c.cmpName && c.cmpName == 'tab'
+			})
 
 			if (this.has_tabs) {
 				this.currentTab = this._changeTab(this.tabs[0])
