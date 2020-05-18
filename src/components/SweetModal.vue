@@ -97,337 +97,335 @@
 </template>
 
 <script>
-	export default {
-		name: 'SweetModal',
+export default {
+	name: 'SweetModal',
 
-		props: {
-			title: {
-				type: String,
-				required: false,
-				default: ''
-			},
-
-			overlayTheme: {
-				type: String,
-				required: false,
-				default: 'light'
-			},
-
-			modalTheme: {
-				type: String,
-				required: false,
-				default: 'light'
-			},
-
-			blocking: {
-				type: Boolean,
-				required: false,
-				default: false
-			},
-
-			pulseOnBlock: {
-				type: Boolean,
-				required: false,
-				default: true
-			},
-
-			icon: {
-				type: String,
-				required: false,
-				default: ''
-			},
-
-			hideCloseButton: {
-				type: Boolean,
-				required: false,
-				default: false
-			},
-
-			enableMobileFullscreen: {
-				type: Boolean,
-				required: false,
-				default: true
-			},
-
-			width: {
-				type: [Number, String],
-				required: false,
-				default: null
-			}
+	props: {
+		title: {
+			type: String,
+			required: false,
+			default: ''
 		},
 
-		mounted() {
-			this.tabs = this.$children.filter( (c) => {
-				return c.cmpName && c.cmpName == 'tab'
-			})
-
-			if (this.has_tabs) {
-				this.currentTab = this._changeTab(this.tabs[0])
-			}
-
-			document.addEventListener('keyup', this._onDocumentKeyup)
+		overlayTheme: {
+			type: String,
+			required: false,
+			default: 'light'
 		},
 
-		beforeDestroy() {
-			document.removeEventListener('keyup', this._onDocumentKeyup)
+		modalTheme: {
+			type: String,
+			required: false,
+			default: 'light'
 		},
 
-		data () {
-			return {
-				visible: false,
-				is_open: false,
-				is_bouncing: false,
-				tabs: [],
-
-				backups: {
-					body: {
-						height: null,
-						overflow: null
-					}
-				}
-			}
+		blocking: {
+			type: Boolean,
+			required: false,
+			default: false
 		},
 
-		computed: {
-			has_title() {
-				return this.title || this.$slots.title
-			},
-
-			has_tabs() {
-				return this.tabs.length > 0
-			},
-
-			has_content() {
-				return this.$slots.default
-			},
-
-			current_tab() {
-				return this.tabs.filter(t => t.active === true)[0]
-			},
-
-			overlay_classes() {
-				return [
-					'sweet-modal-overlay',
-					'theme-' + this.overlayTheme,
-					'sweet-modal-clickable',
-					{
-						'is-visible': this.visible,
-						blocking: this.blocking
-					}
-				]
-			},
-
-			modal_classes() {
-				return [
-					'sweet-modal',
-					'theme-' + this.modalTheme,
-					{
-						'has-title': this.has_title,
-						'has-tabs': this.has_tabs,
-						'has-content': this.has_content,
-						'has-icon': this.icon,
-						'is-mobile-fullscreen': this.enableMobileFullscreen,
-						'is-visible': this.visible,
-						'is-alert': (this.icon && !this.has_tabs) || (!this.icon && !this.title && !this.$slots.title),
-						bounce: this.is_bouncing,
-					}
-				]
-			},
-
-			modal_style() {
-				let width = this.width
-				let maxWidth = null
-
-				if (width !== null) {
-					if (Number(width) == width) {
-						width = width + 'px'
-					}
-
-					maxWidth = 'none'
-				}
-
-				return {
-					width,
-					maxWidth
-				}
-			}
+		pulseOnBlock: {
+			type: Boolean,
+			required: false,
+			default: true
 		},
 
-		methods: {
-			/**
-			 * Open the dialog
-			 * Emits an event 'open'
-			 *
-			 * @param tabId string     Optional id or index of initial tab element.
-			 */
-			open(tabId = null) {
-				if (tabId && this.has_tabs) {
-					// Find tab with wanted id.
-					let openingTabs = this.tabs.filter((tab) => {return tab.id === tabId})
-					if (openingTabs.length > 0) {
-						// Set current tab to first match.
-						this.currentTab = this._changeTab(openingTabs[0])
-					} else {
-						// Try opening index instead of id as an alternative.
-						let openingTab = this.tabs[tabId]
-						if (openingTab) {
-							this.currentTab = this._changeTab(openingTab)
-						}
-					}
-				}
+		icon: {
+			type: String,
+			required: false,
+			default: ''
+		},
 
-				this.is_open = true
-				this._lockBody()
-				this._animateIcon()
+		hideCloseButton: {
+			type: Boolean,
+			required: false,
+			default: false
+		},
 
-				setTimeout(() => this.visible = true, 30)
-				this.$emit('open')
-			},
+		enableMobileFullscreen: {
+			type: Boolean,
+			required: false,
+			default: true
+		},
 
-			/**
-			 * Close the dialog
-			 * Emits an event 'close'
-			 */
-			close() {
-				this.visible = false
-				this._unlockBody()
+		width: {
+			type: [Number, String],
+			required: false,
+			default: null
+		}
+	},
 
-				setTimeout(() => this.is_open = false, 300)
-				this.$emit('close')
-			},
+	mounted: function () {
+		this.tabs = this.$children.filter( c => c.cmpName && c.cmpName == 'tab' )
 
-			/**
-			 * Bounce the modal.
-			 */
-			bounce() {
-				this.is_bouncing = true
+		if (this.has_tabs) {
+			this.currentTab = this._changeTab(this.tabs[0])
+		}
 
-				setTimeout(() => this.is_bouncing = false, 330)
-			},
+		document.addEventListener('keyup', this._onDocumentKeyup)
+	},
 
-			/**********************
-			    INTERNAL METHODS
-			 **********************/
+	beforeDestroy: function () {
+		document.removeEventListener('keyup', this._onDocumentKeyup)
+	},
 
-			_lockBody() {
-				this.backups.body.height = document.body.style.height
-				this.backups.body.overflow = document.body.style.overflow
+	data: () => {
+		return {
+			visible: false,
+			is_open: false,
+			is_bouncing: false,
+			tabs: [],
 
-				document.body.style.height = '100%'
-				document.body.style.overflow = 'hidden'
-			},
-
-			_unlockBody() {
-				document.body.style.height = this.backups.body.height
-				document.body.style.overflow = this.backups.body.overflow
-			},
-
-			_onOverlayClick(event) {
-				if (!event.target.classList || event.target.classList.contains('sweet-modal-clickable')) {
-					if (this.blocking) {
-						if (this.pulseOnBlock) this.bounce()
-					} else {
-						this.close()
-					}
-				}
-			},
-
-			_onDocumentKeyup(event) {
-				if (event.keyCode == 27) {
-					if (this.blocking) {
-						if (this.pulseOnBlock) this.bounce()
-					} else {
-						this.close()
-					}
-				}
-			},
-
-			_changeTab(tab) {
-				this.tabs.map(t => t.active = t == tab)
-				this.currentTab = tab
-			},
-
-			_getClassesForTab(tab) {
-				return [
-					'sweet-modal-tab',
-
-					{
-						active: tab.active,
-						disabled: tab.disabled
-					}
-				]
-			},
-
-			_animateIcon() {
-				if (!this.icon) return
-
-				switch (this.icon) {
-					case 'success':
-						setTimeout(() => {
-							this._applyClasses(this.$refs.icon_success, {
-								'': [ 'animate' ],
-								'.sweet-modal-tip': [ 'animateSuccessTip' ],
-								'.sweet-modal-long': [ 'animateSuccessLong' ]
-							})
-						}, 80)
-
-						break;
-
-					case 'warning':
-						this._applyClasses(this.$refs.icon_warning, {
-							'': [ 'pulseWarning' ],
-							'.sweet-modal-body': [ 'pulseWarningIns' ],
-							'.sweet-modal-dot': [ 'pulseWarningIns' ]
-						})
-
-						break;
-
-					case 'error':
-						setTimeout(() => {
-							this._applyClasses(this.$refs.icon_error, {
-								'': [ 'animateErrorIcon' ],
-								'.sweet-modal-x-mark': [ 'animateXMark' ]
-							})
-						}, 80)
-
-						break;
-				}
-			},
-
-			/**
-			 * Apply classes from the classMap to $ref or children of $ref, a native
-			 * DOMElement.
-			 *
-			 * ClassMap:
-			 * {
-			 *     'selector': [ 'class1', 'class2', ... ]
-			 * }
-			 *
-			 * Empty Selector selects $ref.
-			 *
-			 * @param DOMNode $ref     Element to apply classes to or children of that element
-			 * @param Object  classMap Class Map which elements get which classes (see doc)
-			 */
-			_applyClasses($ref, classMap) {
-				for (let cl in classMap) {
-					let classes = classMap[cl]
-					let $el
-
-					if (cl == '') {
-						$el = $ref
-					} else {
-						$el = $ref.querySelector(cl)
-					}
-
-					$el.classList.remove(...classes)
-					$el.classList.add(...classes)
+			backups: {
+				body: {
+					height: null,
+					overflow: null
 				}
 			}
 		}
+	},
+
+	computed: {
+		has_title() {
+			return this.title || this.$slots.title
+		},
+
+		has_tabs() {
+			return this.tabs.length > 0
+		},
+
+		has_content() {
+			return this.$slots.default
+		},
+
+		current_tab() {
+			return this.tabs.filter(t => t.active === true)[0]
+		},
+
+		overlay_classes() {
+			return [
+				'sweet-modal-overlay',
+				'theme-' + this.overlayTheme,
+				'sweet-modal-clickable',
+				{
+					'is-visible': this.visible,
+					blocking: this.blocking
+				}
+			]
+		},
+
+		modal_classes() {
+			return [
+				'sweet-modal',
+				'theme-' + this.modalTheme,
+				{
+					'has-title': this.has_title,
+					'has-tabs': this.has_tabs,
+					'has-content': this.has_content,
+					'has-icon': this.icon,
+					'is-mobile-fullscreen': this.enableMobileFullscreen,
+					'is-visible': this.visible,
+					'is-alert': (this.icon && !this.has_tabs) || (!this.icon && !this.title && !this.$slots.title),
+					bounce: this.is_bouncing,
+				}
+			]
+		},
+
+		modal_style() {
+			let width = this.width
+			let maxWidth = null
+
+			if (width !== null) {
+				if (Number(width) == width) {
+					width = width + 'px'
+				}
+
+				maxWidth = 'none'
+			}
+
+			return {
+				width,
+				maxWidth
+			}
+		}
+	},
+
+	methods: {
+		/**
+		 * Open the dialog
+		 * Emits an event 'open'
+		 *
+		 * @param tabId string     Optional id or index of initial tab element.
+		 */
+		open(tabId = null) {
+			if (tabId && this.has_tabs) {
+				// Find tab with wanted id.
+				let openingTabs = this.tabs.filter( tab => tab.id === tabId )
+				if (openingTabs.length > 0) {
+					// Set current tab to first match.
+					this.currentTab = this._changeTab(openingTabs[0])
+				} else {
+					// Try opening index instead of id as an alternative.
+					let openingTab = this.tabs[tabId]
+					if (openingTab) {
+						this.currentTab = this._changeTab(openingTab)
+					}
+				}
+			}
+
+			this.is_open = true
+			this._lockBody()
+			this._animateIcon()
+
+			setTimeout(() => this.visible = true, 30)
+			this.$emit('open')
+		},
+
+		/**
+		 * Close the dialog
+		 * Emits an event 'close'
+		 */
+		close() {
+			this.visible = false
+			this._unlockBody()
+
+			setTimeout(() => this.is_open = false, 300)
+			this.$emit('close')
+		},
+
+		/**
+		 * Bounce the modal.
+		 */
+		bounce() {
+			this.is_bouncing = true
+
+			setTimeout(() => this.is_bouncing = false, 330)
+		},
+
+		/**********************
+			INTERNAL METHODS
+			**********************/
+
+		_lockBody() {
+			this.backups.body.height = document.body.style.height
+			this.backups.body.overflow = document.body.style.overflow
+
+			document.body.style.height = '100%'
+			document.body.style.overflow = 'hidden'
+		},
+
+		_unlockBody() {
+			document.body.style.height = this.backups.body.height
+			document.body.style.overflow = this.backups.body.overflow
+		},
+
+		_onOverlayClick(event) {
+			if (!event.target.classList || event.target.classList.contains('sweet-modal-clickable')) {
+				if (this.blocking && this.pulseOnBlock) {
+					this.bounce()
+				} else {
+					this.close()
+				}
+			}
+		},
+
+		_onDocumentKeyup(event) {
+			if (event.keyCode == 27) {
+				if (this.blocking && this.pulseOnBlock) {
+					this.bounce()
+				} else {
+					this.close()
+				}
+			}
+		},
+
+		_changeTab(tab) {
+			this.tabs.map( t => t.active = t == tab )
+			this.currentTab = tab
+		},
+
+		_getClassesForTab(tab) {
+			return [
+				'sweet-modal-tab',
+
+				{
+					active: tab.active,
+					disabled: tab.disabled
+				}
+			]
+		},
+
+		_animateIcon() {
+			if (!this.icon) return
+
+			switch (this.icon) {
+				case 'success':
+					setTimeout(() => {
+						this._applyClasses(this.$refs.icon_success, {
+							'': [ 'animate' ],
+							'.sweet-modal-tip': [ 'animateSuccessTip' ],
+							'.sweet-modal-long': [ 'animateSuccessLong' ]
+						})
+					}, 80)
+
+					break;
+
+				case 'warning':
+					this._applyClasses(this.$refs.icon_warning, {
+						'': [ 'pulseWarning' ],
+						'.sweet-modal-body': [ 'pulseWarningIns' ],
+						'.sweet-modal-dot': [ 'pulseWarningIns' ]
+					})
+
+					break;
+
+				case 'error':
+					setTimeout(() => {
+						this._applyClasses(this.$refs.icon_error, {
+							'': [ 'animateErrorIcon' ],
+							'.sweet-modal-x-mark': [ 'animateXMark' ]
+						})
+					}, 80)
+
+					break;
+			}
+		},
+
+		/**
+		 * Apply classes from the classMap to $ref or children of $ref, a native
+		 * DOMElement.
+		 *
+		 * ClassMap:
+		 * {
+		 *     'selector': [ 'class1', 'class2', ... ]
+		 * }
+		 *
+		 * Empty Selector selects $ref.
+		 *
+		 * @param DOMNode $ref     Element to apply classes to or children of that element
+		 * @param Object  classMap Class Map which elements get which classes (see doc)
+		 */
+		_applyClasses($ref, classMap) {
+			for (let cl in classMap) {
+				let classes = classMap[cl]
+				let $el
+
+				if (cl == '') {
+					$el = $ref
+				} else {
+					$el = $ref.querySelector(cl)
+				}
+
+				$el.classList.remove(...classes)
+				$el.classList.add(...classes)
+			}
+		}
 	}
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped >
 	@import '../styles/mixins';
 	@import '../styles/colors';
 	@import '../styles/animations';
@@ -461,7 +459,7 @@
 		opacity: 0;
 		transition: opacity 0.3s;
 		transform: translate3D(0, 0, 0);
-		-webkit-perspective: 500px;
+		perspective: 500px;
 
 		&.is-visible {
 			opacity: 1;

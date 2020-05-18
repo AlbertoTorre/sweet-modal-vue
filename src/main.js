@@ -1,5 +1,3 @@
-import "@babel/polyfill"
-
 import SweetModal from './components/SweetModal.vue'
 import SweetModalTab from './components/SweetModalTab.vue'
 
